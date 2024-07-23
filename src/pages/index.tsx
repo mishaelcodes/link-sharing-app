@@ -1,27 +1,50 @@
 // ****************** firebase imports
 
 import auth from "../firebase/auth";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 
 // ****************** Next Imports
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 // ****************** React Hooks
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// ****************** icon imports
 
 import logo from "../images/logo.svg";
 import envelope from "../images/envelope.png";
 import lockKey from "../images/lock-key.svg";
+
+// ****************** component imports
+
 import Button from "@/components/button";
 
 export default function Home() {
+  const router = useRouter();
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   /* const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState(""); */
+  const [loggedIn, setLoggedIn] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push("/dashboard");
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [router]);
 
   // ****************** Handle email input change
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +90,7 @@ export default function Home() {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        alert("logged in");
+        router.push("/dashboard")
         user;
       })
       .catch((error) => {
