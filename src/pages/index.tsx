@@ -1,10 +1,83 @@
+// ****************** firebase imports
+
+import auth from "../firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+// ****************** React Hooks
+
+import { useState } from "react";
+
 import Image from "next/image";
-import logo from "../images/logo.svg"
-import envelope from "../images/envelope.png"
-import lockKey from "../images/lock-key.svg"
+import logo from "../images/logo.svg";
+import envelope from "../images/envelope.png";
+import lockKey from "../images/lock-key.svg";
 import Button from "@/components/button";
 
 export default function Home() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  /* const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState(""); */
+
+  // ****************** Handle email input change
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    /* setEmailError("");
+    setErrorModal(false); */
+  };
+
+  // ****************** Handle password input change
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    /*  setPasswordError("");
+    setErrorModal(false); */
+  };
+
+  // ****************** login user
+  const loginUser = (e: React.FormEvent) => {
+    e.preventDefault();
+    const emailFormat = /^\S+@\S+\.\S+$/;
+
+    // ****************** Validating email
+    if (!email) {
+      alert("Email is required");
+      return false;
+    } else if (!emailFormat.test(email)) {
+      alert("Email is invalid");
+      return false;
+    }
+
+    // ****************** Validating password
+    if (!password) {
+      alert("Password is required");
+      return false;
+    } else if (password.length < 6) {
+      alert("Password must be at least 6 characters");
+      return false;
+    }
+
+    // ****************** If all checks proceed to sign in user
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        alert("logged in");
+        user;
+      })
+      .catch((error) => {
+        // ****************** Error Handling
+        const errorCode = error.code;
+
+        if (errorCode === "auth/invalid-credential") {
+          alert("Invalid login credentials");
+        } else if (errorCode === "auth/network-request-failed") {
+          alert("Network error, please try again later");
+        }
+      });
+  };
+
   return (
     <main
       className={`flex min-h-screen flex-col flex-1 items-start self-stretch p-8 gap-16 font-instrument_sans`}
@@ -19,7 +92,11 @@ export default function Home() {
             Add your details to get back into the app
           </p>
         </div>
-        <form autoFocus className="w-full flex flex-col items-start gap-6">
+        <form
+          autoFocus
+          className="w-full flex flex-col items-start gap-6"
+          onSubmit={loginUser}
+        >
           <label
             htmlFor="email"
             className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
@@ -29,6 +106,9 @@ export default function Home() {
             <input
               type="email"
               id="email"
+              value={email}
+              onChange={handleEmailChange}
+              autoComplete="email"
               className="w-full flex py-3 px-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal opacity-50"
               placeholder="e.g. alex@email.com"
             />
@@ -42,14 +122,23 @@ export default function Home() {
             <input
               type="password"
               id="password"
+              value={password}
+              onChange={handlePasswordChange}
+              autoComplete="current-password"
               className="flex py-3 px-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal opacity-50"
               placeholder="Enter your password"
             />
           </label>
-          <Button text="Login" textColor="text-white" backgroundColor="bg-purple" />
+          <Button
+            text="Login"
+            textColor="text-white"
+            backgroundColor="bg-purple"
+          />
           <section className="text-center w-full text-base font-normal leading-normal">
             <p className="text-grey">Don&apos;t have an account?</p>
-            <a href="/create-account" className="text-purple">Create account</a>
+            <a href="/create-account" className="text-purple">
+              Create account
+            </a>
           </section>
         </form>
       </div>
