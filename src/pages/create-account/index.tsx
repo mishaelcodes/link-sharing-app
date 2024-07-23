@@ -172,7 +172,7 @@ const CreateAccount = () => {
             <Image src={lockKey} alt="lockKey_icon" />
             <input
               type="password"
-              id="password"
+              id="confirm password"
               minLength={8}
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
