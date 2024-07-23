@@ -9,11 +9,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors:{
+      colors: {
         purple: "hsl(252, 100%, 62%)",
         lightPurple: "hsl(252, 100%, 84%)",
         fadedPurple: "hsl(252, 100%, 96%)",
-        black: "hsl(0, 0%, 20%)",
+        darkGrey: "hsl(0, 0%, 20%)",
         grey: "hsl(0, 0%, 45%)",
         lightGrey: "hsl(0, 0%, 85%)",
         almostWhte: "hsl(0, 0%, 98%)",
@@ -21,7 +21,13 @@ const config: Config = {
         red: "hsl(0, 100%, 61%)",
       },
       fontFamily: {
-        instrument_sans: ['var(--font-instrument_sans)']
+        instrument_sans: ["var(--font-instrument_sans)"],
+      },
+      flex: {
+        "1": "1 0 0",
+      },
+      lineHeight: {
+        normal: "150%",
       },
     },
   },
