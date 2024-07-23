@@ -3,11 +3,15 @@
 import auth from "../firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
+// ****************** Next Imports
+
+import Image from "next/image";
+import Link from "next/link";
+
 // ****************** React Hooks
 
 import { useState } from "react";
 
-import Image from "next/image";
 import logo from "../images/logo.svg";
 import envelope from "../images/envelope.png";
 import lockKey from "../images/lock-key.svg";
@@ -136,9 +140,9 @@ export default function Home() {
           />
           <section className="text-center w-full text-base font-normal leading-normal">
             <p className="text-grey">Don&apos;t have an account?</p>
-            <a href="/create-account" className="text-purple">
+            <Link href="/create-account" className="text-purple">
               Create account
-            </a>
+            </Link>
           </section>
         </form>
       </div>

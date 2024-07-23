@@ -14,6 +14,7 @@ import { useState } from "react";
 // ****************** Next import
 
 import Image from "next/image";
+import Link from "next/link";
 
 // ****************** Icons import
 
@@ -190,9 +191,9 @@ const CreateAccount = () => {
           </p>
           <section className="text-center w-full text-base font-normal leading-normal">
             <p className="text-grey">Already have an account?</p>
-            <a href="#" className="text-purple">
+            <Link href="/" className="text-purple">
               Login
-            </a>
+            </Link>
           </section>
         </form>
       </div>
