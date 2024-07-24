@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 // ****************** next imports
 
 import { useRouter } from "next/router";
-import { usePathname } from "next/navigation"
+import { usePathname } from "next/navigation";
 
 import Image from "next/image";
 
@@ -21,18 +21,17 @@ import Button from "@/components/button";
 
 // ****************** icon/images imports
 
-import logoIcon from "@/images/logo-icon.svg"
-import eye from "@/images/eye.svg"
-import link from "@/images/link.svg"
-import userCircle from "@/images/user-circle.svg"
-import getStarted from "@/images/get-started.svg"
-
+import logoIcon from "@/images/logo-icon.svg";
+import eye from "@/images/eye.svg";
+import link from "@/images/link.svg";
+import userCircle from "@/images/user-circle.svg";
+import getStarted from "@/images/get-started.svg";
 
 function Dashboard() {
   const router = useRouter();
   const [, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
-  const pathname = usePathname() 
+  const pathname = usePathname();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -57,7 +56,13 @@ function Dashboard() {
         <div className="flex items-center justify-between self-stretch">
           <Image src={logoIcon} alt="logo-Icon" />
           <div className="flex items-start">
-            <div className={`${pathname === "/dashboard" ? "bg-lightPurple" : ""}`}></div>
+            <Image
+              src={link}
+              alt="link icon"
+              className={`flex items-center gap-2 py-[11px] px-[27px] rounded-lg w-[80px] ${
+                pathname === "/dashboard" ? "bg-lightPurple" : ""
+              }`}
+            />
             <Image
               src={userCircle}
               alt="user circle icon"
@@ -97,17 +102,20 @@ function Dashboard() {
                 </h3>
                 <p className="text-grey text-center text-base font-normal leading-normal">
                   Use the “Add new link” button to get started. Once you have
-                  more than one link, you can reorder and edit them. We&apos;re here
-                  to help you share your profiles with everyone!
+                  more than one link, you can reorder and edit them. We&apos;re
+                  here to help you share your profiles with everyone!
                 </p>
               </div>
             </div>
           </div>
         </div>
-
       </div>
       <div className="flex flex-col items-end self-stretch p-4 gap-2">
-        <Button text="Save" textColor="text-white" backgroundColor="bg-lightPurple" />
+        <Button
+          text="Save"
+          textColor="text-white"
+          backgroundColor="bg-lightPurple"
+        />
       </div>
     </main>
   );
