@@ -3,7 +3,13 @@
 import { onAuthStateChanged } from "firebase/auth";
 import auth from "@/firebase/auth";
 import db from "@/firebase/firestore";
-import { collection, doc, setDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  setDoc,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
 
 // ****************** react imports
 
@@ -67,7 +73,6 @@ function Dashboard() {
   };
 
   // fetch user links from firestore
-
   const fetchUserLinks = useCallback(async () => {
     if (userDocRef) {
       try {
@@ -164,6 +169,27 @@ function Dashboard() {
     } else alert("The link you entered does not match the platform of choice");
   };
 
+  //********************************* delete created urls
+  const handleRemoveLink = async (id: string) => {
+    const docRef = userId
+      ? doc(db, "user-links", userId, "links", id)
+      : null;
+
+    if (docRef) {
+      await deleteDoc(docRef);
+    }
+
+    setUserLinks((prevUserLinks) => {
+      return prevUserLinks.map((item) => {
+        if (item.id === id) {
+          return { ...item };
+        }
+
+        return item;
+      });
+    });
+  };
+
   if (loading) {
     return <Loader />; // Render a loading state until authentication is confirmed
   }
@@ -224,7 +250,7 @@ function Dashboard() {
                     <p className="text-grey text-base font-bold leading-normal">
                       Link #{index + 1}
                     </p>
-                    <p className="text-grey text-base font-bold leading-normal">
+                    <p className="text-grey text-base font-bold leading-normal" onClick={() => handleRemoveLink(userLink.id)}>
                       Remove
                     </p>
                   </div>
