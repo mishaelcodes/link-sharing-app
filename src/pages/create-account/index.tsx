@@ -114,10 +114,10 @@ const CreateAccount = () => {
   };
   return (
     <main
-      className={`flex min-h-screen flex-col flex-1 items-start self-stretch p-8 gap-16 font-instrument_sans`}
+      className={`flex min-h-screen flex-col flex-1 items-start self-stretch p-8 gap-16 font-instrument_sans md:py-[138px] md:px-10 md:justify-center md:items-center md:bg-almostWhte md:gap-[51px]`}
     >
       <Image src={logo} alt="devlinks logo" />
-      <div className="flex flex-col items-start gap-10">
+      <div className="flex flex-col items-start gap-10 md:p-10 bg-white rounded-xl">
         <div className="flex flex-col items-start flex-1 gap-2">
           <h2 className="text-darkGrey text-2xl leading-normal font-bold">
             Create account
@@ -136,23 +136,35 @@ const CreateAccount = () => {
             className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
           >
             Email address
-            <Image src={envelope} alt="envelope_icon" />
+          </label>
+          <div className="relative w-full">
+            <Image
+              src={envelope}
+              alt="envelope_icon"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2"
+            />
             <input
               type="email"
               id="email"
               value={email}
               onChange={handleEmailChange}
               autoComplete="email"
-              className="w-full flex py-3 px-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal opacity-50"
+              className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
               placeholder="e.g. alex@email.com"
             />
-          </label>
+          </div>
           <label
             htmlFor="password"
             className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
           >
             Create password
-            <Image src={lockKey} alt="lockKey_icon" />
+          </label>
+          <div className="relative w-full">
+            <Image
+              src={lockKey}
+              alt="lockKey_icon"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2"
+            />
             <input
               type="password"
               id="password"
@@ -160,16 +172,22 @@ const CreateAccount = () => {
               value={password}
               onChange={handlePasswordChange}
               autoComplete="current-password"
-              className="flex py-3 px-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal opacity-50"
+              className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
               placeholder="At least 8 characters"
             />
-          </label>
+          </div>
           <label
             htmlFor="password"
             className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
           >
             Confirm password
-            <Image src={lockKey} alt="lockKey_icon" />
+          </label>
+          <div className="relative w-full">
+            <Image
+              src={lockKey}
+              alt="lockKey_icon"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2"
+            />
             <input
               type="password"
               id="confirm password"
@@ -177,19 +195,19 @@ const CreateAccount = () => {
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
               autoComplete="current-password"
-              className="flex py-3 px-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal opacity-50"
+              className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
               placeholder="At least 8 characters"
             />
-          </label>
+          </div>
           <Button
             text="Login"
             textColor="text-white"
-            backgroundColor="bg-purple"
+            backgroundColor="bg-purple hover:bg-lightPurple"
           />
           <p className="text-grey">
             Password must contain at least 8 characters
           </p>
-          <section className="text-center w-full text-base font-normal leading-normal">
+          <section className="text-center w-full text-base font-normal leading-normal md:flex md:gap-1">
             <p className="text-grey">Already have an account?</p>
             <Link href="/" className="text-purple">
               Login

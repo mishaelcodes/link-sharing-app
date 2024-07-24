@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        activeShadow: "0 0 32px 0 hsl(252, 100%, 62%)",
+      },
       colors: {
         purple: "hsl(252, 100%, 62%)",
         lightPurple: "hsl(252, 100%, 84%)",
