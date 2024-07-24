@@ -104,63 +104,89 @@ function Dashboard() {
   }, [fetchUserLinks, router]);
 
   // save social link to firestore
-  const saveLink = async (e: React.FormEvent) => {
-    e.preventDefault();
+ const saveLink = async (e: React.FormEvent) => {
+   e.preventDefault();
 
-    if (
-      (platform === "GitHub" &&
-        platformLink.startsWith("https://github.com")) ||
-      (platform === "Twitter" &&
-        platformLink.startsWith("https://twitter.com/")) ||
-      platformLink.startsWith("https://x.com/") ||
-      (platform === "LinkedIn" &&
-        platformLink.startsWith("https://linkedin.com")) ||
-      (platform === "Frontend Mentor" &&
-        platformLink.startsWith("https://frontendmentor.io")) ||
-      (platform === "Facebook" &&
-        platformLink.startsWith("https://facebook.com")) ||
-      (platform === "Twitch" && platformLink.startsWith("https://twitch.tv")) ||
-      (platform === "Dev.to" && platformLink.startsWith("https://dev.to")) ||
-      (platform === "Codewars" &&
-        platformLink.startsWith("https://codewars.com")) ||
-      (platform === "Codepen" &&
-        platformLink.startsWith("https://codepen.io")) ||
-      (platform === "freeCodeCamp" &&
-        platformLink.startsWith("https://freecodecamp.org")) ||
-      (platform === "GitLab" &&
-        platformLink.startsWith("https://gitlab.com")) ||
-      (platform === "Hashnode" &&
-        platformLink.startsWith("https://hashnode.com")) ||
-      (platform === "Stack Overflow" &&
-        platformLink.startsWith("https://stackoverflow.com")) ||
-      (platform === "YouTube" &&
-        platformLink.startsWith("https://www.youtube.com/"))
-    ) {
-      if (userDocRef) {
-        const docId = nanoid(12);
-        const docRef = doc(userDocRef, docId);
+   let isValidLink = false;
 
-        try {
-          await setDoc(docRef, {
-            platform: platform,
-            link: platformLink,
-          });
-          fetchUserLinks();
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setIsEditing(false);
-        }
-      }
-    } else if (platformLink === "") {
-      alert("Please enter a link");
-    } else if (
-      !platformLink.startsWith("https://") ||
-      !platformLink.startsWith("https://")
-    ) {
-      alert("Invalid link");
-    } else alert("The link you entered does not match the platform of choice");
-  };
+   console.log("Platform: ", platform);
+   console.log("Platform Link: ", platformLink);
+
+   switch (platform) {
+     case "GitHub":
+       isValidLink = platformLink.startsWith("https://github.com");
+       break;
+     case "Twitter":
+       isValidLink =
+         platformLink.startsWith("https://twitter.com") ||
+         platformLink.startsWith("https://x.com/");
+       break;
+     case "LinkedIn":
+       isValidLink = platformLink.startsWith("https://linkedin.com");
+       break;
+     case "Frontend Mentor":
+       isValidLink = platformLink.startsWith("https://frontendmentor.io");
+       break;
+     case "Facebook":
+       isValidLink = platformLink.startsWith("https://facebook.com");
+       break;
+     case "Twitch":
+       isValidLink = platformLink.startsWith("https://twitch.tv");
+       break;
+     case "Dev.to":
+       isValidLink = platformLink.startsWith("https://dev.to");
+       break;
+     case "Codewars":
+       isValidLink = platformLink.startsWith("https://codewars.com");
+       break;
+     case "Codepen":
+       isValidLink = platformLink.startsWith("https://codepen.io");
+       break;
+     case "freeCodeCamp":
+       isValidLink = platformLink.startsWith("https://freecodecamp.org");
+       break;
+     case "GitLab":
+       isValidLink = platformLink.startsWith("https://gitlab.com");
+       break;
+     case "Hashnode":
+       isValidLink = platformLink.startsWith("https://hashnode.com");
+       break;
+     case "Stack Overflow":
+       isValidLink = platformLink.startsWith("https://stackoverflow.com");
+       break;
+     case "YouTube":
+       isValidLink = platformLink.startsWith("https://www.youtube.com/");
+       break;
+     default:
+       isValidLink = false;
+   }
+
+   console.log("Is Valid Link: ", isValidLink);
+
+   if (isValidLink) {
+     if (userDocRef) {
+       const docId = nanoid(12);
+       const docRef = doc(userDocRef, docId);
+
+       try {
+         await setDoc(docRef, {
+           platform: platform,
+           link: platformLink,
+         });
+         fetchUserLinks();
+       } catch (error) {
+         console.error(error);
+       } finally {
+         setIsEditing(false);
+       }
+     }
+   } else if (platformLink === "") {
+     alert("Please enter a link");
+   } else {
+     alert("The link you entered does not match the platform of choice");
+   }
+ };
+
 
   //********************************* delete created urls
   const handleRemoveLink = async (id: string) => {
@@ -275,16 +301,19 @@ function Dashboard() {
                 </div>
               ))
             ) : (
-              <div className="flex flex-col items-center self-stretch gap-6">
-                <Image src={getStarted} alt="illustration" />
-                <h3 className="text-darkGrey text-center text-2xl font-bold leading-normal">
-                  Let&apos;s get you started
-                </h3>
-                <p className="text-grey text-center text-base font-normal leading-normal">
-                  Use the “Add new link” button to get started. Once you have
-                  more than one link, you can reorder and edit them. We&apos;re
-                  here to help you share your profiles with everyone!
-                </p>
+              <div className="flex flex-col items-center justify-center self-stretch gap-3 flex-1 p-5 rounded-xl bg-almostWhte md:min-h-[570px]">
+                <div className="flex items-center justify-center flex-col self-stretch gap-10 min-h-[344px]">
+                  <Image src={getStarted} alt="illustration" />
+                  <h3 className="text-darkGrey text-center text-2xl font-bold leading-normal">
+                    Let&apos;s get you started
+                  </h3>
+                  <p className="text-grey text-center text-base font-normal leading-normal md:w-[488px]">
+                    Use the “Add new link” button to get started. Once you have
+                    more than one link, you can reorder and edit them.
+                    We&apos;re here to help you share your profiles with
+                    everyone!
+                  </p>
+                </div>
               </div>
             )}
             {isEditing ? (
@@ -328,6 +357,7 @@ function Dashboard() {
                     id="platform-link"
                     placeholder="e.g https://www.github.com/"
                     onChange={handleLinkChange}
+                    value={platformLink}
                     className="w-full flex items-center self-stretch py-3 px-4 gap-3 rounded-lg border border-lightGrey bg-white"
                   />
                 </div>
@@ -338,7 +368,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="w-full flex flex-col items-end self-stretch p-4 gap-2">
+      <div className="w-full flex flex-col items-end self-stretch p-4 md:py-6 md:px-10 gap-2">
         <Button
           text="Save"
           textColor="text-white"
