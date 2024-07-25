@@ -214,10 +214,10 @@ function Dashboard() {
   return (
     <main>
       <Header />
-      <div className="flex items-start self-stretch flex-1 gap-6 p-4 bg-almostWhte">
-        <div className="flex flex-col items-start self-stretch flex-1 gap-10 p-6 border-b bg-white border-lightGrey">
+      <div className="flex items-start self-stretch flex-1 gap-6 p-4 bg-almostWhte font-instrument_sans">
+        <div className="flex flex-col items-start self-stretch flex-1 gap-10 p-6 border-b bg-white border-lightGrey md:p-10">
           <div className="flex flex-col items-start self-stretch gap-2">
-            <h2 className="text-darkGrey text-2xl font-bold self-stretch leading-normal">
+            <h2 className="text-darkGrey text-2xl font-bold self-stretch leading-normal md:text-3xl">
               Customize your links
             </h2>
             <p className="text-grey text-base font-normal leading-normal">
@@ -245,7 +245,7 @@ function Dashboard() {
                       Link #{index + 1}
                     </p>
                     <p
-                      className="text-grey text-base font-bold leading-normal"
+                      className="text-grey text-base font-normal leading-normal"
                       onClick={() => handleRemoveLink(userLink.id)}
                     >
                       Remove

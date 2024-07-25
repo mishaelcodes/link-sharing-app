@@ -122,7 +122,7 @@ function Profile() {
             <div className="flex flex-col justify-center items-start gap-1 self-stretch md:flex-row md:justify-between">
               <label
                 htmlFor="first-name"
-                className="text-darkGrey text-xs font-normal leading-normal"
+                className="text-darkGrey text-xs font-normal leading-normal md:text-base"
               >
                 First name*
               </label>
@@ -137,7 +137,7 @@ function Profile() {
             <div className="flex flex-col justify-center items-start gap-1 self-stretch md:flex-row md:justify-between">
               <label
                 htmlFor="last-name"
-                className="text-darkGrey text-xs font-normal leading-normal"
+                className="text-darkGrey text-xs font-normal leading-normal md:text-base"
               >
                 Last name*
               </label>
@@ -152,9 +152,9 @@ function Profile() {
             <div className="flex flex-col justify-center items-start gap-1 self-stretch md:flex-row md:justify-between">
               <label
                 htmlFor="email"
-                className="text-darkGrey text-xs font-normal leading-normal"
+                className="text-darkGrey text-xs font-normal leading-normal md:text-base"
               >
-                Email*
+                Email
               </label>
               <input
                 type="email"

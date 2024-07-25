@@ -1,6 +1,7 @@
-// ****************** components imports
+// ****************** next imports
 
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 
 // ****************** icon/images imports
@@ -9,7 +10,7 @@ import logoIcon from "@/images/logo-icon.svg";
 import eye from "@/images/eye.svg";
 import link from "@/images/link.svg";
 import userCircle from "@/images/user-circle.svg";
-import Link from "next/link";
+import logo from "@/images/logo.svg"
 
 const Header = () => {
   const pathname = usePathname();
@@ -17,11 +18,14 @@ const Header = () => {
     <>
       <div className="flex flex-col items-start self-stretch py-4 pr-4 pl-6 gap-2">
         <div className="flex items-center justify-between self-stretch">
-          <Image src={logoIcon} alt="logo-Icon" />
+          <div>
+            <Image src={logoIcon} alt="logo-Icon" className="md:hidden"/>
+            <Image src={logo} alt="devlinks logo" className="hidden md:flex"/>
+          </div>
           <div className="flex items-start">
             <div
               className={`flex items-center gap-2 rounded-lg py-[11px] px-[27px] ${
-                pathname === "/dashboard" ? "bg-lightPurple" : ""
+                pathname === "/dashboard" ? "bg-fadedPurple" : ""
               }`}
             >
               <Link href="/dashboard" className="flex">
@@ -37,7 +41,7 @@ const Header = () => {
             </div>
             <div
               className={`flex items-center gap-2 rounded-lg py-[11px] px-[27px] ${
-                pathname === "/profile" ? "bg-lightPurple" : ""
+                pathname === "/profile" ? "bg-fadedPurple" : ""
               }`}
             >
               <Link href="/profile" className="flex">
@@ -59,7 +63,7 @@ const Header = () => {
             <Image
               src={eye}
               alt="preview-icon"
-              className="flex flex-col items-start gap-2"
+              className="flex flex-col items-start gap-2 md:hidden"
             />
             <p className="hidden text-base font-semibold leading-normal text-purple md:block">
               Preview
