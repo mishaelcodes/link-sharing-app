@@ -1,13 +1,23 @@
-import React, { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import Image from "next/image";
+import { useImage } from "@/context/imageProvider";
 import galleryIcon from "@/images/galleryIcon.svg";
-// import uploadIcon from "path/to/your/uploadIcon.svg"; // replace with your icon path
+import auth from "@/firebase/auth";
 
 const ImageUploadForm: React.FC = () => {
+  const {setImage} = useImage()
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | "">("");
   const [error, setError] = useState<string>("");
+  const [profilePicture, setProfilePicture] = useState("")
 
+  const user = auth.currentUser
+  useEffect(() => {
+    if (user && user.photoURL) {
+      const src = user.photoURL.slice(3)
+      setProfilePicture(src || "");
+    }
+  }, [user])
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     if (file) {
@@ -17,7 +27,9 @@ const ImageUploadForm: React.FC = () => {
           setError("Image must be less than 1024x1024 pixels.");
         } else {
           setSelectedFile(file);
-          setPreview(URL.createObjectURL(file));
+          const imageURL = URL.createObjectURL(file)
+          setPreview(imageURL);
+          setImage(imageURL)
           setError("");
         }
       };
@@ -38,11 +50,11 @@ const ImageUploadForm: React.FC = () => {
     <form className="flex flex-col items-center justify-center gap-6 self-start">
       <div className="flex flex-col px-[38px] py-[60px] items-center self-start justify-center rounded-xl bg-fadedPurple">
         <div className="flex flex-col items-center gap-2">
-          {preview ? (
+          {profilePicture || preview ? (
             <div className="relative w-24 h-24 flex items-center justify-center border rounded-full overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={preview}
+                src={profilePicture}
                 alt="Selected Image"
                 className="object-cover w-full h-full"
               />

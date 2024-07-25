@@ -18,7 +18,11 @@ import ImageUploadForm from "@/components/imageUpload";
 import auth from "@/firebase/auth";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 
-function Dashboard() {
+
+// ****************** context imports
+import { useImage } from "@/context/imageProvider";
+
+function Profile() {
   const router = useRouter()
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -28,6 +32,7 @@ function Dashboard() {
   const [isEditing, setIsEditing] = useState(false);
   const [, setLoggedIn] = useState(true)
 
+  const { image } = useImage()
   const user = auth.currentUser;
 
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +61,7 @@ function Dashboard() {
     if (user && fullName) {
       updateProfile(user, {
         displayName: fullName,
+        photoURL: image || user.photoURL
       })
         .then(() => {
           alert("Profile Updated");
@@ -172,4 +178,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Profile;
