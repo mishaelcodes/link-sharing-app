@@ -9,6 +9,7 @@ import logoIcon from "@/images/logo-icon.svg";
 import eye from "@/images/eye.svg";
 import link from "@/images/link.svg";
 import userCircle from "@/images/user-circle.svg";
+import Link from "next/link";
 
 const Header = () => {
   const pathname = usePathname();
@@ -23,34 +24,37 @@ const Header = () => {
                 pathname === "/dashboard" ? "bg-lightPurple" : ""
               }`}
             >
-              <Image
-                src={link}
-                alt="link icon"
-                className={`flex items-center gap-2 rounded-lg `}
-              />
-              <p className="hidden text-base font-semibold leading-normal text-purple md:block">
-                Links
-              </p>
+              <Link href="/dashboard">
+                <Image
+                  src={link}
+                  alt="link icon"
+                  className={`flex items-center gap-2 rounded-lg `}
+                />
+                <p className="hidden text-base font-semibold leading-normal text-purple md:block">
+                  Links
+                </p>
+              </Link>
             </div>
             <div
               className={`flex items-center gap-2 rounded-lg py-[11px] px-[27px] ${
                 pathname === "/profile" ? "bg-lightPurple" : ""
               }`}
             >
-              <Image
-                src={userCircle}
-                alt="user circle icon"
-                className="flex items-center gap-2 rounded-lg"
-              />
-              <p className="hidden text-base font-semibold leading-normal text-purple md:block">
-                Profile Details
-              </p>
+              <Link href="/profile">
+                <Image
+                  src={userCircle}
+                  alt="user circle icon"
+                  className="flex items-center gap-2 rounded-lg"
+                />
+                <p className="hidden text-base font-semibold leading-normal text-purple md:block">
+                  Profile Details
+                </p>
+              </Link>
             </div>
           </div>
-          <div
-            className={`flex items-center gap-2 rounded-lg py-[11px] px-4 border border-purple ${
-              pathname === "/profile" ? "bg-lightPurple" : ""
-            }`}
+          <Link
+            href="/preview"
+            className={`flex items-center gap-2 rounded-lg py-[11px] px-4 border border-purple `}
           >
             <Image
               src={eye}
@@ -60,11 +64,11 @@ const Header = () => {
             <p className="hidden text-base font-semibold leading-normal text-purple md:block">
               Preview
             </p>
-          </div>
+          </Link>
         </div>
       </div>
     </>
   );
 };
 
-export default Header
+export default Header;
