@@ -110,14 +110,16 @@ function Profile() {
               Add your details to create a personal touch to your profile.
             </p>
           </div>
-          <div className="flex p-5 flex-col items-start justify-center gap-3 self-stretch rounded-xl bg-almostWhte">
-            <p className="text-grey text-base font-normal leading-normal">
-              Profile Picture
-            </p>
-            <ImageUploadForm />
+          <div className="flex flex-col items-center justify-center p-5 gap-3 self-stretch">
+            <div className="flex p-5 flex-col items-start justify-center gap-3 self-stretch rounded-xl bg-almostWhte md:items-center md:gap-4 md:flex-row">
+              <p className="text-grey text-base font-normal leading-normal w-[230px]">
+                Profile Picture
+              </p>
+              <ImageUploadForm />
+            </div>
           </div>
           <form className="flex p-5 flex-col justify-center items-center gap-3 self-stretch rounded-xl bg-almostWhte">
-            <div className="flex flex-col justify-center items-start gap-1 self-stretch">
+            <div className="flex flex-col justify-center items-start gap-1 self-stretch md:flex-row md:justify-between">
               <label
                 htmlFor="first-name"
                 className="text-darkGrey text-xs font-normal leading-normal"
@@ -129,10 +131,10 @@ function Profile() {
                 id="first-name"
                 value={firstName}
                 onChange={handleFirstNameChange}
-                className="flex py-3 px-4 gap-3 self-stretch rounded-lg border border-lightGrey bg-white"
+                className="flex py-3 px-4 gap-3 self-stretch rounded-lg border border-lightGrey bg-white md:w-1/2"
               />
             </div>
-            <div className="flex flex-col justify-center items-start gap-1 self-stretch">
+            <div className="flex flex-col justify-center items-start gap-1 self-stretch md:flex-row md:justify-between">
               <label
                 htmlFor="last-name"
                 className="text-darkGrey text-xs font-normal leading-normal"
@@ -144,10 +146,10 @@ function Profile() {
                 id="last-name"
                 value={lastName}
                 onChange={handleLastNameChange}
-                className="flex py-3 px-4 gap-3 self-stretch rounded-lg border border-lightGrey bg-white"
+                className="flex py-3 px-4 gap-3 self-stretch rounded-lg border border-lightGrey bg-white md:w-1/2"
               />
             </div>
-            <div className="flex flex-col justify-center items-start gap-1 self-stretch">
+            <div className="flex flex-col justify-center items-start gap-1 self-stretch md:flex-row md:justify-between">
               <label
                 htmlFor="email"
                 className="text-darkGrey text-xs font-normal leading-normal"
@@ -159,7 +161,7 @@ function Profile() {
                 id="email"
                 onChange={handleEmailChange}
                 value={email}
-                className="flex py-3 px-4 gap-3 self-stretch rounded-lg border border-lightGrey bg-white"
+                className="flex py-3 px-4 gap-3 self-stretch rounded-lg border border-lightGrey bg-white md:w-1/2"
               />
             </div>
           </form>

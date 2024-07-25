@@ -24,7 +24,7 @@ const Header = () => {
                 pathname === "/dashboard" ? "bg-lightPurple" : ""
               }`}
             >
-              <Link href="/dashboard">
+              <Link href="/dashboard" className="flex">
                 <Image
                   src={link}
                   alt="link icon"
@@ -40,7 +40,7 @@ const Header = () => {
                 pathname === "/profile" ? "bg-lightPurple" : ""
               }`}
             >
-              <Link href="/profile">
+              <Link href="/profile" className="flex">
                 <Image
                   src={userCircle}
                   alt="user circle icon"
