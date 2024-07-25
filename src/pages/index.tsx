@@ -30,7 +30,7 @@ export default function Home() {
   const [password, setPassword] = useState("");
   /* const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState(""); */
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [, setLoggedIn] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
