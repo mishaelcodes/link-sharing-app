@@ -6,7 +6,7 @@ import auth from "@/firebase/auth";
 
 const ImageUploadForm: React.FC = () => {
   const {setImage} = useImage()
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | "">("");
   const [error, setError] = useState<string>("");
   const [profilePicture, setProfilePicture] = useState("")
@@ -65,7 +65,7 @@ const ImageUploadForm: React.FC = () => {
           )}
           <p
             onClick={handleButtonClick}
-            className="text-purple text-base font-semibold leading-normal "
+            className="text-purple text-base font-semibold leading-normal cursor-pointer"
           >
             + Upload Image
           </p>
