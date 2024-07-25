@@ -14,7 +14,7 @@ const ImageUploadForm: React.FC = () => {
   const user = auth.currentUser
   useEffect(() => {
     if (user && user.photoURL) {
-      const photoURL = user.photoURL.slice(5);
+      const photoURL = user.photoURL;
       setProfilePicture(photoURL);
     }
   }, [user])
