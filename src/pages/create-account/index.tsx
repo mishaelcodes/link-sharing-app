@@ -27,23 +27,23 @@ const CreateAccount = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // const [emailError, setEmailError] = useState("");
-  // const [passwordError, setPasswordError] = useState("");
-  // const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [error, setError] = useState("");
 
   // ****************** Checks for changes in the email input field
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = e.target.value;
     setEmail(newEmail);
-    // setEmailError("");
-    // setErrorModal(false);
+    setEmailError("");
   };
 
   // ****************** Checks for changes in the password input field
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    // setPasswordError("");
+    setPasswordError("");
   };
 
   // ****************** Checks for changes in the confirm pasword input field
@@ -52,7 +52,7 @@ const CreateAccount = () => {
   ) => {
     const confirmPassword = e.target.value;
     setConfirmPassword(confirmPassword);
-    // setConfirmPasswordError("");
+    setConfirmPasswordError("");
   };
 
   // ****************** Function to create new user
@@ -61,27 +61,27 @@ const CreateAccount = () => {
     const emailFormat = /^\S+@\S+\.\S+$/;
 
     if (!email) {
-      alert("No email");
+      setEmailError("Email is required");
       return false;
     } else if (!emailFormat.test(email)) {
-      alert("email not valid");
+      setEmailError("Email is invalid");
     }
 
     // ****************** validating password
     if (!password) {
-      alert("Password is required");
+      setPasswordError("Password is required");
       return;
     } else if (password.length < 8) {
-      alert("Password must be at least 8 characters");
+      setPasswordError("8 characters minimum");
       return;
     }
 
     // ****************** validating confirm password
     if (!confirmPassword) {
-      alert("Confirm Password  is required");
+      setConfirmPasswordError("Confirm Password");
       return;
     } else if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setConfirmPasswordError("Passwords do not match");
       return;
     }
 
@@ -104,9 +104,9 @@ const CreateAccount = () => {
         // ****************** Checks for any error
         const errorCode = error.code;
         if (errorCode === "auth/email-already-in-use") {
-          alert("Email is already in use");
+          setError("Email is already in use");
         } else if (errorCode === "auth/network-request-failed") {
-          alert("Network error, please try again later");
+          setError("Network error, please try again later");
         }
       });
 
@@ -114,11 +114,18 @@ const CreateAccount = () => {
   };
   return (
     <main
-      className={`flex min-h-screen flex-col flex-1 items-start self-stretch p-8 gap-16 font-instrument_sans md:py-[138px] md:px-10 md:justify-center md:items-center md:bg-almostWhte md:gap-[51px]`}
+      className={`flex min-h-screen flex-col flex-1 items-start self-stretch p-8 gap-16 font-instrument_sans 2xl:py-[138px] 2xl:px-10 sm:justify-center sm:items-center sm:bg-almostWhte sm:gap-[51px]`}
     >
       <Image src={logo} alt="devlinks logo" />
-      <div className="flex flex-col items-start gap-10 md:p-10 bg-white rounded-xl">
+      <div className="flex flex-col items-start gap-10 sm:p-5 md:p-10 bg-white rounded-xl">
         <div className="flex flex-col items-start flex-1 gap-2">
+          {error ? (
+            <p className="text-sm self-center font-semibold text-red leading-normal">
+              {error}
+            </p>
+          ) : (
+            ""
+          )}
           <h2 className="text-darkGrey text-2xl leading-normal font-bold">
             Create account
           </h2>
@@ -131,73 +138,106 @@ const CreateAccount = () => {
           className="w-full flex flex-col items-start gap-6"
           onSubmit={createUser}
         >
-          <label
-            htmlFor="email"
-            className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
-          >
-            Email address
-          </label>
-          <div className="relative w-full">
-            <Image
-              src={envelope}
-              alt="envelope_icon"
-              className="absolute left-3 top-1/2 transform -translate-y-1/2"
-            />
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={handleEmailChange}
-              autoComplete="email"
-              className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
-              placeholder="e.g. alex@email.com"
-            />
+          <div className="w-full flex flex-col items-start gap-1">
+            <label
+              htmlFor="email"
+              className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
+            >
+              Email address
+            </label>
+            <div className="relative w-full">
+              <Image
+                src={envelope}
+                alt="envelope_icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2"
+              />
+              <p
+                className={`${
+                  emailError
+                    ? "text-right text-xs font-normal leading-normal text-red absolute right-3 top-1/2 transform -translate-y-1/2"
+                    : "hidden"
+                }`}
+              >
+                {emailError}
+              </p>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={handleEmailChange}
+                autoComplete="email"
+                className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
+                placeholder="e.g. alex@email.com"
+              />
+            </div>
           </div>
-          <label
-            htmlFor="password"
-            className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
-          >
-            Create password
-          </label>
-          <div className="relative w-full">
-            <Image
-              src={lockKey}
-              alt="lockKey_icon"
-              className="absolute left-3 top-1/2 transform -translate-y-1/2"
-            />
-            <input
-              type="password"
-              id="password"
-              minLength={8}
-              value={password}
-              onChange={handlePasswordChange}
-              autoComplete="current-password"
-              className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
-              placeholder="At least 8 characters"
-            />
+          <div className="w-full flex flex-col items-start gap-1">
+            <label
+              htmlFor="password"
+              className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
+            >
+              Create password
+            </label>
+            <div className="relative w-full">
+              <Image
+                src={lockKey}
+                alt="lockKey_icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2"
+              />
+              <p
+                className={`${
+                  passwordError
+                    ? "text-right text-xs font-normal leading-normal text-red absolute right-3 top-1/2 transform -translate-y-1/2"
+                    : "hidden"
+                }`}
+              >
+                {passwordError}
+              </p>
+              <input
+                type="password"
+                id="password"
+                minLength={8}
+                value={password}
+                onChange={handlePasswordChange}
+                autoComplete="current-password"
+                className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
+                placeholder="At least 8 characters"
+              />
+            </div>
           </div>
-          <label
-            htmlFor="password"
-            className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
-          >
-            Confirm password
-          </label>
-          <div className="relative w-full">
-            <Image
-              src={lockKey}
-              alt="lockKey_icon"
-              className="absolute left-3 top-1/2 transform -translate-y-1/2"
-            />
-            <input
-              type="password"
-              id="confirm password"
-              minLength={8}
-              value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
-              autoComplete="current-password"
-              className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
-              placeholder="At least 8 characters"
-            />
+          <div className="w-full flex flex-col items-start gap-1">
+            <label
+              htmlFor="password"
+              className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
+            >
+              Confirm password
+            </label>
+            <div className="relative w-full">
+              <Image
+                src={lockKey}
+                alt="lockKey_icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2"
+              />
+              <p
+                className={`${
+                  confirmPasswordError
+                    ? "text-right text-xs font-normal leading-normal text-red absolute right-3 top-1/2 transform -translate-y-1/2"
+                    : "hidden"
+                }`}
+              >
+                {confirmPasswordError}
+              </p>
+              <input
+                type="password"
+                id="confirm password"
+                minLength={8}
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
+                autoComplete="current-password"
+                className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
+                placeholder="At least 8 characters"
+              />
+            </div>
           </div>
           <Button
             text="Login"

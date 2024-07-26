@@ -41,10 +41,10 @@ const Header = () => {
             </div>
             <div
               className={`flex items-center gap-2 rounded-lg py-[11px] px-[27px] ${
-                pathname === "/profile" ? "bg-fadedPurple" : ""
+                pathname === "/profile-settings" ? "bg-fadedPurple" : ""
               }`}
             >
-              <Link href="/profile" className="flex">
+              <Link href="/profile-settings" className="flex">
                 <Image
                   src={userCircle}
                   alt="user circle icon"
@@ -57,7 +57,7 @@ const Header = () => {
             </div>
           </div>
           <Link
-            href="/preview"
+            href="/profile"
             className={`flex items-center gap-2 rounded-lg py-[11px] px-4 border border-purple `}
           >
             <Image

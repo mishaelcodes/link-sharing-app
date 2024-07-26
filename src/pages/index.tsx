@@ -28,8 +28,9 @@ export default function Home() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  /* const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState(""); */
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState("");
   const [, setLoggedIn] = useState(true);
 
   useEffect(() => {
@@ -50,16 +51,14 @@ export default function Home() {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = e.target.value;
     setEmail(newEmail);
-    /* setEmailError("");
-    setErrorModal(false); */
+    setEmailError("");
   };
 
   // ****************** Handle password input change
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    /*  setPasswordError("");
-    setErrorModal(false); */
+    setPasswordError("");
   };
 
   // ****************** login user
@@ -69,19 +68,16 @@ export default function Home() {
 
     // ****************** Validating email
     if (!email) {
-      alert("Email is required");
+      setEmailError("Email is required");
       return false;
-    } else if (!emailFormat.test(email)) {
-      alert("Email is invalid");
+    } else if (emailFormat.test(email) === false) {
+      setEmailError("Email is invalid");
       return false;
     }
 
     // ****************** Validating password
     if (!password) {
-      alert("Password is required");
-      return false;
-    } else if (password.length < 6) {
-      alert("Password must be at least 6 characters");
+      setPasswordError("Password is required");
       return false;
     }
 
@@ -98,20 +94,27 @@ export default function Home() {
         const errorCode = error.code;
 
         if (errorCode === "auth/invalid-credential") {
-          alert("Invalid login credentials");
+          setError("Invalid login credentials");
         } else if (errorCode === "auth/network-request-failed") {
-          alert("Network error, please try again later");
+          setError("Network error, please try again later");
         }
       });
   };
 
   return (
     <main
-      className={`flex min-h-screen flex-col flex-1 items-start self-stretch p-8 gap-16 font-instrument_sans md:py-72 md:px-36 md:justify-center md:items-center md:bg-almostWhte md:gap-[51px]`}
+      className={`flex min-h-screen flex-col flex-1 items-start self-stretch p-8 gap-16 font-instrument_sans 2xl:py-72 2xl:px-36 sm:justify-center sm:items-center sm:bg-almostWhte sm:gap-[51px]`}
     >
       <Image src={logo} alt="devlinks logo" />
-      <div className="flex flex-col items-start gap-10 md:p-10 bg-white rounded-xl">
+      <div className="flex flex-col items-start gap-10 sm:p-5 md:p-10 bg-white rounded-xl md:min-w-[400px]">
         <div className="flex flex-col items-start flex-1 gap-2">
+          {error ? (
+            <p className="text-sm self-center font-semibold text-red leading-normal">
+              {error}
+            </p>
+          ) : (
+            ""
+          )}
           <h2 className="text-darkGrey text-2xl leading-normal font-bold md:text-3xl">
             Login
           </h2>
@@ -124,49 +127,71 @@ export default function Home() {
           className="w-full flex flex-col items-start gap-6"
           onSubmit={loginUser}
         >
-          <label
-            htmlFor="email"
-            className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
-          >
-            Email address{" "}
-          </label>
-          <div className="relative w-full">
-            <Image
-              src={envelope}
-              alt="envelope_icon"
-              className="absolute left-3 top-1/2 transform -translate-y-1/2"
-            />
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={handleEmailChange}
-              autoComplete="email"
-              className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
-              placeholder="e.g. alex@email.com"
-            />
+          <div className="w-full flex flex-col items-start gap-1">
+            <label
+              htmlFor="email"
+              className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
+            >
+              Email address{" "}
+            </label>
+            <div className="relative w-full">
+              <Image
+                src={envelope}
+                alt="envelope_icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2"
+              />
+              <p
+                className={`${
+                  emailError
+                    ? "text-right text-xs font-normal leading-normal text-red absolute right-3 top-1/2 transform -translate-y-1/2"
+                    : "hidden"
+                }`}
+              >
+                {emailError}
+              </p>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={handleEmailChange}
+                autoComplete="email"
+                className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
+                placeholder="e.g. alex@email.com"
+              />
+            </div>
           </div>
-          <label
-            htmlFor="password"
-            className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
-          >
-            Password{" "}
-          </label>
-          <div className="relative w-full">
-            <Image
-              src={lockKey}
-              alt="lockKey_icon"
-              className="absolute left-3 top-1/2 transform -translate-y-1/2"
-            />
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={handlePasswordChange}
-              autoComplete="current-password"
-              className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
-              placeholder="Enter your password"
-            />
+          <div className="w-full flex flex-col items-start gap-1">
+            <label
+              htmlFor="password"
+              className="text-darkGrey text-xs font-normal leading-normal flex flex-col items-start gap-1 self-stretch"
+            >
+              Password{" "}
+            </label>
+            <div className="relative w-full">
+              <Image
+                src={lockKey}
+                alt="lockKey_icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2"
+              />
+              <p
+                className={`${
+                  passwordError
+                    ? "text-right text-xs font-normal leading-normal text-red absolute right-3 top-1/2 transform -translate-y-1/2"
+                    : "hidden"
+                }`}
+              >
+                {passwordError}
+              </p>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={handlePasswordChange}
+                autoComplete="current-password"
+                className="w-full py-3 pl-10 pr-4 gap-3 self-stretch border border-lightGrey rounded-lg bg-white text-darkGrey text-base font-normal placeholder:opacity-50 focus:outline-none focus:border focus:border-purple focus:shadow-activeShadow"
+                placeholder="Enter your password"
+              />
+            </div>
           </div>
           <Button
             text="Login"
